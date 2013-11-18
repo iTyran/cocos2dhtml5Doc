@@ -18,18 +18,35 @@ In this documentation, I will omit the very details of each software package's i
 
 # Preparation -- Download the required software packages
 
-Downlaod and install WebStorm 7.
+- Download and install WebStorm 7. The current stable release of [WebStorm 7](http://www.jetbrains.com/webstorm/download/index.html) is 7.02. 
 
-Download cocos2d-html5 2.2.
+- Download cocos2d-html5 v2.2 from the offical website of cocos2d-x. Here is the [Link](http://cocos2d-x.org/download ) .
 
-Download   [jetbrains-ide-support ]( https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) 
+After you downloaded the cocos2d-html v2.2. You should unzip it to a proper location. In our case, I unzip it at ~/workspace/cocos2d-html5.
+
+The ~ simbol represents your home directory path, which in our case is /Users/guanghui. 
+
+**Note:** You can also get the cutting edge version of cocos2d-html5 through github. Here is the [cocos2d-html5 github repository](https://github.com/cocos2d/cocos2d-html5 ) .
+
+The active development work are done in **develop** branch.
+
+- Download and install Chrome 30 and the [JetBrains-IDE-support ]( https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji)  extension.
+
+**Note** Don't try to get the latest beta version of Chrome. Some WebGL APIs has changed and you will suffer the API change problems.
+
+Since the current stable release of Chrome is 31.0.1650.57. But if you do want to use this version, you should refer to [this post ](http://www.cocos2d-x.org/forums/19/topics/39063 ) for
+more information.
+
+In the near future, the cocos2d-html5 team will release a new version and you don't need to hack the source code again to work with Chrome 31.
+ 
+All right, let's see how to configure WebStorm 7.1 to develop and debug our cocos2d-html5 applications.
 
 # Configure WebStorm to load cocos2d-html5 and enable auto-complete
 
 - unzip cocos2d-html5-v2.2.zip
 - Create New Project From Existing Files
 
-![Hellow](image/QQ20131118-1.png)
+![Hellow](JBChooseServer.png)
 
 Click **Project ROOt** To set the default project root.
 
