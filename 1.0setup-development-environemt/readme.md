@@ -1,4 +1,22 @@
-# Preparation
+In this documentation, I will show you how to setup a cocos2d-html5 development environment on MacOS 10.9 -- Yeah! The Maverics.
+
+# Prerequisites
+
+To follow this tutorials, you should be familiar with the software package  installation process of MacOS.
+
+Don't worry, the process is deadly simple.
+
+Most of the time, the process is something like that:
+
+- Download the DMG.
+
+- Double click to open it.
+
+- Drag and drop the xxx.app to your /Application directory.
+
+In this documentation, I will omit the very details of each software package's installation process.
+
+# Preparation -- Download the required software packages
 
 Downlaod and install WebStorm 7.
 
