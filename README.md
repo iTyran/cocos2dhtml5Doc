@@ -19,7 +19,7 @@ This kind of organization rules have the following advantages:
 
 For example:
 
-Whe have two articles named **Setup Developmenet Environment** and **Gettting Started** .
+We have two articles named **Setup Developmenet Environment** and **Gettting Started** .
 
 It will be organized like this:
 
