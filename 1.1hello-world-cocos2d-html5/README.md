@@ -6,21 +6,33 @@ Here is the cocos2d-html5 directory structure:
 
 ![directory](directorystructure.png)
 
-##Understanding the directory structure
+##Understanding the directory structures
 
-- The /root/template/  directory is for creating new Cocos2d-html5 projects. All of your games resources, such as images, sounds, background music, config files should go in the /root/template/res. Your own game source code files should go into /root/template/src.
+The directory structures can be separated into four parts:
 
-- The /root/Cocos2d/ directory hosts all core engine files, /root/CocosDenshione/ hosts audio engine files, and  /root/extension/ hosts some useful modules, such as EditBox, CocosBuilder Reader and CocoStudio Reader, etc. All these three directories are expanded files, while /root/lib/ have a minified file of these three part together. 
+### Part1: engine related folders
 
-- The /root/box2d/ and /root/chipmunk/ hosts physics engine.
+- The **cocos2d** directory holds all the core engine files. The main components of cocos2d-html5 are implemented in these js files.
 
-- The /root/HelloHTML5World/ contains a simple hello world.
+- The **CocosDenshion** directory holds all the audio engine related files.
 
-- The /root/license/ includes all the license files in this project, as we mentioned before, the license of Cocos2d-html5 is MIT, it is the freest license of all open source license.
+- The **extension** directory holds some useful extension modules, such as EditBox, CocosBuilder Reader and CocoStudio Reader, etc. 
 
-- The Samples directory, you can find all classes usage in Tests. It also includes sample games. All the tests and games can be run in JSB. This is where you should start from.
+- The folder **box2d** and **chipmunk** are third party physics engine.
 
-- The /root/tools/ directory includes JS Doc tool and closure compiler. The /root/template/build.xml is the config file for closure compiler, you can package your game into single file in advance mode via ANT. What you need to do just add your game js files and then type ant in the console in the directory of /root/template/.
+### Part2: tests,sample games and template
+
+- The folder **HelloHTML5World** contains a simple **Hello World** sample. When you are new to cocos2d-htlm5, you may want to give it a try. It is the minimax skeleton of a full cocos2d-html5 app.
+
+- The **template** is more or less the same as **HelloHTML5World** except for that **template** is more clean. **Template**  folder is where you should start from. At the end of part of this tutorial, we will create a new project based on this folder.
+
+- The **samples** directory, it contains all the **tests** of cocos2d-html5. It also includes some playable sample games. All the tests and games can be run in iOS and android with javascript binding. 
+
+### Part3: miscellaneous
+
+- The **license** directory includes all the license files in this project, as we mentioned before, the license of Cocos2d-html5 is MIT,you can refer to the folder to get more details about the licenses of cocos2d-html5.
+
+- The **tools** directory includes JS Doc tool and closure compiler. The **template** folder contains a build.xml which is a config file for closure compiler, you can package your game into single file via Ant. 
 
 
 
