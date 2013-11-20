@@ -115,7 +115,7 @@ Here is the instructions:
 Now it's time for us to debugging cocos2d-html5 code.
 
 ### Connect WebStorm to Chrome with JB chrome extensions
-1. Right click the **index.html** under **~/Github/cocos2d-html5** and choose **Debug 'index.html':
+1. Right click the **index.html** under **~/Github/cocos2d-html5** and choose **Debug 'index.html'**:
 	
 	**Figure 9**
 	
