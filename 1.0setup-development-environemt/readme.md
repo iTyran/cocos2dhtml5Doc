@@ -37,7 +37,7 @@ In this documentation, I will omit the every details of each software package's 
  
 All right, let's see how to configure WebStorm 7.1 to develop and debug our cocos2d-html5 applications.
 
-# Configure WebStorm to work cocos2d-html5
+# Configure WebStorm to work with cocos2d-html5
 
 At first, you should launch WebStorm 7. If it is your first time to launch WebStorm, it will ask you to choose your personal preference like choosing key mappings. 
 
