@@ -1,0 +1,159 @@
+
+In this tutorial, I will show you how to make your first game scene. Before that, we should be familiar with some basic concepts of cocos2d. If you are already familiar with these concepts, you can safely skim them and continue to read the remaining chapters.
+
+# Getting Started
+
+
+# Basic concepts of cocos2d
+In Cocos2d world, everything is a node, the world is constructed mostly from 3 kinds of nodes:
+
+- A scene node
+
+- Some layer nodes
+
+- Lots of sprite nodes
+
+    Only 1 scene can be running at a time, which includes 1 or more layers,  layers contains sprite nodes that are actually displaying something, such as an image, a character, an explosion etc.
+
+## Director,Scene, Layer and sprite
+### Director
+
+The cc.Director is a shared (singleton) object that takes care of navigating between scenes. It knows which scene is currently active and allows you to change scenes by replacing the current scene or pushing a new one onto the scene stack. When you push a new scene onto the stack, the cc.Director pauses the previous scene but keeps it in memory. Later, when you pop the top scene from the stack, the paused scene resumes from its last state.
+
+The cc.Director is also responsible for initializing OpenGL ES.
+
+### Scene
+
+A scene (implemented with the cc.Scene object) is more or less an independent piece of the app workflow. Some people may call them “screens” or “stages”. Your app can have many scenes, but only one of them is active at a given time.
+
+For example, you could have a game with the following scenes: Intro, Menu, Level 1, Cutscene 1, Level 2, Winning cutscene, losing cutscene, High scores screen. You can think of each one of these scenes as a separate application that can be connected to other scenes with a small amount of "glue" code. For example, the intro scene might go to the menu scene when it finishes, and the scene for Level 1 might lead to cutscene 1 (if the player wins) or to the losing cutscene (if the player loses). An example of how scenes might flow in a game follows:
+
+![scenstructure](scenestructure.png)
+
+A Cocos2d cc.Scene is composed of one or more cc.Node, added as children to the scene. Subclasses of cc.Node, such as cc.Layer and cc.Sprite, give the scene its appearance and behavior. Typically, you implement your screens as subclasses of cc.Layer and add them to a blank instance of cc.Scene. Then, implement your other graphics and game objects as cc.Node and add them as children to the cc.Layer you created.
+
+Because scenes are a subclass of cc.Node, they can be transformed manually or by using cc.Action. See Actions for more information.
+
+There is also a family of cc.Scene classes called transitions, implemented with the ccTransitionScene class. These allow you to create special transition effects when switching from one scene to another--for example, fading, sliding in from the side, and so on.
+
+
+### Layer
+
+A cc.Layer is a cc.Node that knows how to handle touch events. Layers know how to draw themselves and may be semi-transparent, allowing players to see other layers behind them. cc.Layer are very useful in defining your game's appearance and behavior, so you should expect to spend a lot of your programming time coding cc.Layer subclasses that do what you need.
+
+![layer](layerstructure.png)
+
+The cc.Layer is where you define touch event handlers. By implementing a method to handle one of the touch events (ccTouchBegan, ccTouchMoved, ccTouchEnded, or ccTouchCancelled) a cc.Layer can react to the player's interaction. These touch events are propagated to all the layers within a scene, from front to back, until some layer catches the event and accepts it.
+
+While complex applications will require you to define custom cc.Layer subclasses, Cocos2d provides several predefined layers. Some examples include cc.Menu (a simple menu layer), cc.ColorLayer (a layer that draws a solid color), and cc.LayerMultiplex (a layer that lets you multiplex its children, activating one at a time while disabling the others).
+
+Layers may contain any cc.Node as a child, including cc.Sprite, cc.Label, and even other cc.Layer objects. Because layers are a subclass of cc.Node, they can be transformed manually or by using cc.Action. 
+
+
+### Sprite
+
+A Cocos2d cc.Sprite is similar to sprites you find in other game engines. It is a 2D image that can be moved, rotated, scaled, animated, and undergo other transformations. Sprites (implemented using the cc.Sprite class) can have other sprites as children. When a parent is transformed, all its children are transformed as well. Because sprites are a subclass of cc.Node, they can be transformed manually or by using cc.Action. 
+
+
+### All these objects are Nodes
+
+TBD
+
+## Coordination system
+
+Cocos2d-html5 uses the same coordinate system as OpenGL, which is so call “Right-handed Cartesian Coordinate System”. It is popular in game industry, however, it is  different from traditional top left coordinate system which used in web-page design. 
+
+![coordinate](coordinatesystem.png)
+
+For a 2D game:
+
+- X axis starts at the left side of the screen and increases to the right
+
+- Y axis starts at the bottom of the screen and increases upwards
+
+- The origin (x = 0, y = 0) is the bottom-left corner of screen. It is the first quadrant of right-handed cartesian coordinate system.
+
+   The anchor point is used for both positioning and rotation of an object. The anchor point coordinate is relative coordinate, for example, the anchor point in position (0, 0) which we always define in short in Cocos2d as cc.p(0 , 0) corresponds to the most bottom-left of that object, while cc.p(0.5, 0.5) corresponds to the center of the object. When setting the position of the object, the object is positioned such that the anchor point will be at the coordinates specified in the setPosition() call. Similarly, when rotating the object, it is rotated about the anchor point.
+   
+For example, this sprite has an anchorPoint of cc.p(0, 0) and a position of cc.p(0,0).
+
+```
+ // create sprite 
+    var sprite = cc. Sprite.create ( "bottomleft.png" ) ; 
+    sprite. setAnchorPoint ( cc.p ( 0 , 0 ) ) ; // Anchor Point 
+    sprite. setPosition ( cc.p ( 0 , 0 ) ) ; 
+    this.addChild ( sprite ) ;
+```
+
+
+## Action
+
+Actions are like orders given to any CCNode object. These actions usually modify some of the object's attributes like position, rotation, scale, etc. If these attributes are modified during a period of time, they are CCIntervalAction actions, otherwise they are CCInstantAction actions.
+
+For example, the CCMoveBy action modifies the position property during a period of time, hence, it is a subclass of CCIntervalAction.
+
+```
+// Move a sprite 50 pixels to the right, and 10 pixels to the top over 2 seconds.
+sprite.runAction(cc.MoveBy.create(2, cc.p(50, 10)));
+```
+
+
+## Animation
+
+In Cocos2d, animations are bind to animate actions. You can use a sequence of images to create a animation. After the animation is made, you can use the following code to play animation on a sprite.
+
+```
+ var animation = cc.Animation.create ( ) ; 
+        for ( var i = 1 ; i < 15 ; i ++ ) {         
+        var frameName = "res/Images/grossini_dance_" + ( ( i < 10 ) ? ( "0" + i ) : i ) + ".png" ; 
+           animation. addSpriteFrameWithFile ( frameName ) ; 
+        } 
+        animation. setDelayPerUnit ( 2.8 / 14 ) ; 
+        animation. setRestoreOriginalFrame ( true ) ; 
+        var action = cc. Animate . create ( animation ) ; 
+        sprite. runAction ( cc. Sequence . create ( action , action. reverse ( ) ) ) ;
+```
+
+
+## Scheduler
+
+Scheduler is responsible for triggering the scheduled callbacks.
+
+There are two different types of callbacks (selectors) in Cocos2d:
+
+- Update selector: the 'update' selector will be called every frame. You can customize the priority.
+
+- Custom selector: A custom selector will be called every frame, or with a custom interval of time.
+
+- Custom selectors should be avoided when possible. Update selectors are faster and consume less memory.
+
+
+
+## TouchEvent
+
+Cocos2d supports two different ways of handling touch events. These are defined by two different types of delegates (both defined in CCTouchDelegateProtocol.js).
+There are TargetedTouchDelegate and StandardTouchDelegate. 
+
+Using TargetedTouchDelegate results in two benefits:
+
+1. You don't need to deal with cc.Sets, the dispatcher does the job of splitting
+   them. You get exactly one cc.Touch per call.
+
+2. You can claim a cc.Touch by returning true in onTouchBegan. Updates of claimed
+    touches are sent only to the delegate(s) that claimed them. So if you get a move/
+     ended/cancelled update you're sure it's your touch. This frees you from doing a
+   lot of checks when doing multi-touch.
+
+Using StandardTouchDelegate results in two benefits:
+
+ 1. You need to deal with cc.Sets, you should do the job of splitting
+   them. You can get each cc.Touch from the cc.Sets.
+   
+ 2. You don’t need to claim true or false in ccTouchesBegan.
+
+# Make your first Game scene
+
+# Summary
+
+# Wehre to go from here
+
