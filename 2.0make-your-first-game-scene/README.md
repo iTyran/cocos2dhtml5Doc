@@ -196,9 +196,47 @@ The second one:
 
 Ok, I think the background information is enough. Let's do some cleanup stuff.
 
-At first, we should delete all the contents of myApp.js. Because we will write them from scratch.
+#### Delete the multiple resolution stuff
 
-Secondly, we should change this line:
+1. Delete **HD** and **Normal** folder under **res** directory. Leave your res directory looks like this:(this resource files can be found from our sample project)
+
+	![res](resdirectory.png)
+
+2. Delete the following code pieces in main.js:
+
+```
+        var platform = cc.Application.getInstance().getTargetPlatform();
+        if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER) {
+            resDirOrders.push("HD");
+        }
+        else if (platform == cc.TARGET_PLATFORM.PC_BROWSER) {
+            if (screenSize.height >= 800) {
+                resDirOrders.push("HD");
+            }
+            else {
+                resourceSize = cc.size(320, 480);
+                designSize = cc.size(320, 480);
+                resDirOrders.push("Normal");
+            }
+        }
+       cc.FileUtils.getInstance().setSearchResolutionsOrder(resDirOrders);
+       director.setContentScaleFactor(resourceSize.width / designSize.width);
+```
+
+and delete the following code:
+
+```
+   var screenSize = cc.EGLView.getInstance().getFrameSize();
+   var resourceSize = cc.size(480, 800);
+   var resDirOrders = [];
+```
+
+
+#### Cleanup the myApp.js
+
+This process is very simple. At first, we should delete all the contents of myApp.js. Because we will rewrite them from scratch.
+
+Secondly, we should change this line in main.js:
 
 ```
 var myApp = new cocos2dApp(MyScene);
@@ -209,13 +247,96 @@ to
 ```
 var myApp = new cocos2dApp(MenuScene);
 ```
-Yeah, I guess you got the point. We will define our first class named MenuScene.
+Yeah, I guess you have got the point. We will define our first class which name is MenuScene.
+
+At last, we should define some resource variables for easy access.
+
+Open resource.js and change it's content to this:
+
+```
+  var s_HelloBG = "helloBG.png";
+  var s_start_n = "start_n.png";
+  var s_start_s = "start_s.png";
+
+  var g_resources = [
+    //image
+    {src:s_HelloBG},
+    {src:s_start_n},
+    {src:s_start_s}
+  ];
+```
 
 ### Define your first scene - MenuScene
+
+Open myApp.js and start to define the MenuLayer:
+
+```
+var MenuLayer = cc.Layer.extend({
+    ctor : function(){
+    	//1. call super class's ctor function
+        this._super();
+        this.init();
+    },
+    init:function(){
+    	//call super class's super function
+    	this._super();
+    	
+    	//2. get the singleton director
+        var director = cc.Director.getInstance();
+        
+        //3. get the screen size of your game canvas
+        var winsize = director.getWinSize();
+        //4. calculate the center point
+        var centerpos = cc.p(winsize.width / 2, winsize.height / 2);
+
+		//5. create a background image and set it's position at the center of the screen
+        var spritebg = cc.Sprite.create(s_HelloBG);
+        spritebg.setPosition(centerpos);
+        this.addChild(spritebg);
+
+		//6.
+        cc.MenuItemFont.setFontSize(60);
+        
+        //7.create a menu and assign onPlay event callback to it
+        var menuItemPlay= cc.MenuItemSprite.create(
+            cc.Sprite.create(s_start_n), // normal state image
+            cc.Sprite.create(s_start_s), //select state image
+            this.onPlay, this);
+        var menu = cc.Menu.create(menuItemPlay);  //7. create the menu
+        menu.setPosition(centerpos);
+        this.addChild(menu);
+    },
+
+    onPlay : function(){
+        cc.log("==onplay clicked");
+    }
+});
+```
+
+Let's go through all the details from 1-7:
+
+1. this._super();
+
+And also we should define a Menu scene:
+
+```
+var MenuScene = cc.Scene.extend({
+    onEnter:function () {
+        this._super();
+        var layer = new MenuLayer();
+        layer.init();
+        this.addChild(layer);
+    }
+});
+```
 
 
 
 # Summary
 
-# Wehre to go from here
+In this tutorial,  I have shown you the basic concepts you need to know when you first start programming cocos2d games. And also giving you a detailed explanation of how to set up your first game scene. Hope you enjoy it and happy coding! The related sample project can be founded at [xxx](xxxx).
+
+# Where to go from here
+In the next tutorial, I will show you how to define your game scene and along with the various game layers. How to design these layers, what's the responsibility of these layers. 
+
 
