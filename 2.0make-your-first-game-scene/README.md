@@ -315,8 +315,18 @@ var MenuLayer = cc.Layer.extend({
 
 Let's go through all the details from 1-7:
 
-1. this._super();
+1. It calls the init function of it's super class.
+2. Since Director is designed as a singleton class,so we can use getInstance() to obtain the instance.
+3. Get the screen size of you game
+4. Calculate the center point of your screen which will be used to center background images.
+5. Create a background image with filename and set it's position to the center of the screen. At last, add the sprite to MenuLayer as a child.
+6. Call MenuItemFont's setFontSize function to adjust the font size. It is not used in this example. But if you what to use MenuItemFont to create some menu items, it will affect the menu item label size.
+7. create a menu with two images, one for normal state and another for selected state. Then we set the menu's position to the center of your screen. At last, it is added to the current layer.
 
+**Note:**
+
+> Don't copy these code or try to remember all of these dirty things. Because cocos2d-html5 is under active development. The API will be minor changed due to some reasons. So try to understand it.
+ 
 And also we should define a Menu scene:
 
 ```
@@ -329,14 +339,17 @@ var MenuScene = cc.Scene.extend({
     }
 });
 ```
+The process of creating a MenuScene is very straightforward. You define a variable which derived from cc.Scene. You should remember the sign **extend** is used for extending class.
 
+Once the scene is created, a **onEnter** function should be defined. It has the MenuLayer as it's child. We can also define a **ctor** function instead of the onEnter function. The onEnter function is called after ctor function.
 
 
 # Summary
 
-In this tutorial,  I have shown you the basic concepts you need to know when you first start programming cocos2d games. And also giving you a detailed explanation of how to set up your first game scene. Hope you enjoy it and happy coding! The related sample project can be founded at [xxx](xxxx).
+In this tutorial,  I have shown you the basic concepts you need to know when you first start programming cocos2d games. And also giving you a detailed explanation of how to set up your first game scene. Hope you enjoy it and happy coding! The related sample project can be downloaded at [here](https://github.com/iTyran/cocos2dhtml5Doc/blob/master/2.0make-your-first-game-scene/Parkour.zip).
 
 # Where to go from here
+
 In the next tutorial, I will show you how to define your game scene and along with the various game layers. How to design these layers, what's the responsibility of these layers. 
 
 
