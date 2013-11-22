@@ -275,7 +275,6 @@ var MenuLayer = cc.Layer.extend({
     ctor : function(){
     	//1. call super class's ctor function
         this._super();
-        this.init();
     },
     init:function(){
     	//call super class's super function
